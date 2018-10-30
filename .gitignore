@@ -1,0 +1,17 @@
+# Pycharm developers
+.idea/
+
+# Mac computers suck
+*.DS_Store
+
+# Wikipedia dumps
+*.bz2
+
+# Extracted articles text
+/data/*.txt
+
+# Ignore pycache
+__pycache__/
+
+# Ignore compiled python files
+.pyc
