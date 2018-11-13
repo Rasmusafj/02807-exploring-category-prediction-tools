@@ -5,8 +5,8 @@ Steps needed to run functions from this file:
     - Tested version: enwiki-latest-pages-articles.xml.bz2
     - Place it in a ./data/ dir or specify in_file to function
 
-To get data for categories, we need to manually remove from 'categories'
-from IGNORED_NAMESPACES in gensim.corpoora.wikicorpus
+You need forked gensim version with category extraction support for WikiCorpus
+i.e. pip install https://github.com/Rasmusafj/gensim/archive/develop.zip
 """
 
 from gensim.corpora import WikiCorpus
@@ -42,14 +42,17 @@ def generate_corpus(load_only_fraction=True,
     # Define two unique tokens, so we easily can extract page id and article name
     title_seperator = "::title::"
     page_id_seperator = "::pageid::"
+    categories_seperator = "::categories::"
 
     counter = 0
-    for (tokens, (pageid, title)) in wiki.get_texts():
-        output.write(title + title_seperator + pageid + page_id_seperator + bytes(','.join(tokens), 'utf-8').decode('utf-8') + '\n')
+    for (tokens, categories, (pageid, title)) in wiki.get_texts():
+        output.write(title + title_seperator + pageid +
+                     page_id_seperator + bytes(','.join(tokens), 'utf-8').decode('utf-8') +
+                     categories_seperator + "::new::".join(categories) + '\n')
 
         # Monitor process
         counter = counter + 1
-        if counter % 10000 == 0:
+        if counter % 50 == 0:
             print('Processed ' + str(counter) + ' articles')
             if load_only_fraction:
                 break
