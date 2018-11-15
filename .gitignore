@@ -9,6 +9,7 @@
 
 # Extracted articles text
 /data/*.txt
+/data/articles/*
 
 # Ignore pycache
 __pycache__/
