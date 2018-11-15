@@ -94,7 +94,8 @@ if __name__ == '__main__':
                       "Category:Technology",
                       "Category:Applied_sciences"]
 
-    # This is dummy
-    current = 1
+    # This is dummy, to keep track of progress since we
+    # do not want to overload Wikipedia's servers
+    current = 3
     extract_page_ids_for_category(all_categories[current])
     #continue_category_page_extraction(all_categories[current])
