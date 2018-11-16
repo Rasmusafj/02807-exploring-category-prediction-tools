@@ -11,7 +11,7 @@ def query_gen(title):
 def extract_page_ids_for_category(category,
                                   sub_categories_queue=None,
                                   limit=10000):
-    fname = "./data/categories/" + category + "-pageids.txt"
+    fname = "./data/categories/" + category.replace(":", "-") + "-pageids.txt"
     page_ids = {}
 
     # If no subqueue list is given, we just start from the top
@@ -56,7 +56,7 @@ def extract_page_ids_for_category(category,
 
 
 def get_category_fpath(category):
-    return "./data/categories/" + category + "-categories_in_queue.txt"
+    return "./data/categories/" + category.replace(":", "-") + "-categories_in_queue.txt"
 
 
 def continue_category_page_extraction(category):
