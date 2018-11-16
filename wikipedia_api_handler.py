@@ -47,6 +47,8 @@ def extract_page_ids_for_category(category,
                     pageid_output.write(pageid + "\n")
                     counter += 1
 
+            # Might brake doing a category and hence not get
+            # all articles from that but whatever
             if counter > limit:
                 break
 
@@ -66,8 +68,6 @@ def continue_category_page_extraction(category):
 
 
 if __name__ == '__main__':
-    # Do not loop over all categories, or risk getting banned...
-    # extract_page_ids_for_category("Category:Research")
     all_categories = ["Category:Research",
                       "Category:Library_science",
                       "Category:Culture",
@@ -94,9 +94,15 @@ if __name__ == '__main__':
                       "Category:Technology",
                       "Category:Applied_sciences"]
 
+    # Do not loop over all categories, or risk getting banned...
     # This is dummy, to keep track of progress since we
     # do not want to overload Wikipedia's servers
-    current = 8
+    current = 14
+    # 13: Category:Nature
     print("Extracting for: {0}, {1}".format(current, all_categories[current]))
+
+    # Category extraction from the top
     extract_page_ids_for_category(all_categories[current])
+
+    # Continue category extraction
     #continue_category_page_extraction(all_categories[current])
