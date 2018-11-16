@@ -96,7 +96,7 @@ if __name__ == '__main__':
 
     # This is dummy, to keep track of progress since we
     # do not want to overload Wikipedia's servers
-    current = 7
+    current = 8
     print("Extracting for: {0}, {1}".format(current, all_categories[current]))
     extract_page_ids_for_category(all_categories[current])
     #continue_category_page_extraction(all_categories[current])

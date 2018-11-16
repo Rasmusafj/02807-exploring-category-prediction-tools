@@ -40,7 +40,6 @@ def generate_corpus(load_only=None,
     wiki.metadata = True
 
     # Token for when categories starts
-    categories_dict = {}
     counter = 0
 
     for (tokens, (pageid, title)) in wiki.get_texts():
@@ -62,8 +61,6 @@ def generate_corpus(load_only=None,
                 break
 
     print('Processed ' + str(counter) + ' articles')
-    with open('./data/categories_final.txt', 'w') as file:
-        file.write(json.dumps(categories_dict))
 
 
 def load_existing_corpus(in_file="./data/wiki_en_with_categories.txt"):
