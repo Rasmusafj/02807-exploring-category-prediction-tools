@@ -4,9 +4,6 @@ Steps needed to run functions from this file:
 - Download wiki dump from https://dumps.wikimedia.org/enwiki/latest/
     - Tested version: enwiki-latest-pages-articles.xml.bz2
     - Place it in a ./data/ dir or specify in_file to function
-
-You need forked gensim version with category extraction support for WikiCorpus
-i.e. pip install https://github.com/Rasmusafj/gensim/archive/develop.zip
 """
 import re
 from random import shuffle
@@ -46,7 +43,7 @@ def generate_corpus(load_only=None,
     categories_dict = {}
     counter = 0
 
-    for (tokens, categories, (pageid, title)) in wiki.get_texts():
+    for (tokens, (pageid, title)) in wiki.get_texts():
         fname = "./data/articles/" + pageid
 
         # If file already create continue
@@ -54,15 +51,8 @@ def generate_corpus(load_only=None,
             continue
 
         output = io.open(fname, 'w', encoding='utf-8')
-        output.write(title + ',' + bytes(','.join(tokens), 'utf-8').decode('utf-8') + '\n')
+        output.write(bytes(','.join(tokens), 'utf-8').decode('utf-8') + '\n')
         output.close()
-
-        for category in categories:
-            category = re.sub("\|", "", category)
-            if category not in categories_dict:
-                categories_dict[category] = [title]
-            else:
-                categories_dict[category].append(title)
 
         # Monitor process
         counter = counter + 1
