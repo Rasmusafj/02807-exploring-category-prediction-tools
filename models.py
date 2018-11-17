@@ -6,14 +6,19 @@ General code should be put in the abstract class.
 """
 
 from abc import ABC, abstractmethod
-
+from DataHandler import DataHandler
 
 class AbstractModel(ABC):
     """
     Base class for all implemented models.
     """
 
-    def __init__(self):
+    def __init__(self, datahandler_type=None, **kwargs):
+
+        self.data_handler = DataHandler(balance_categories=True,
+                                        preprocessing_method=datahandler_type)
+
+
         self.not_implemented_string = "Not implemented..."
 
     def init_data(self, train_X, train_y, test_X, test_y):
@@ -36,8 +41,8 @@ class AbstractModel(ABC):
 
 class SetSimiliaritiesKNN(AbstractModel):
 
-    def __init__(self, **args):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(datahandler_type="similarities", **kwargs)
 
     def preprocess_data(self):
         print(self.not_implemented_string)
@@ -47,8 +52,8 @@ class SetSimiliaritiesKNN(AbstractModel):
 
 
 class DummyMachineLearningModel(AbstractModel):
-    def __init__(self, **args):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(datahandler_type="bag_of_words", **kwargs)
 
     def preprocess_data(self):
         print(self.not_implemented_string)

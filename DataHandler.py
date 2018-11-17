@@ -10,7 +10,8 @@ class DataHandler(object):
                  directory_path="./data/dataset/",
                  test_split = 0.2,
                  balance_categories=False,
-                 memory_effecient=False):
+                 memory_effecient=False,
+                 preprocessing_method=None):
 
         category_files = os.listdir(directory_path)
         regex_category = "(.*)\.txt"
@@ -20,6 +21,7 @@ class DataHandler(object):
         self.index_to_category_dict = {}
         self.category_to_index = {}
         self.min_number_pages = 0
+        self.preprocessing_method = preprocessing_method
 
         # Loads all data into a dictionary
         if not memory_effecient:
@@ -56,6 +58,8 @@ class DataHandler(object):
         for category in self.data_dict.keys():
             data = self.data_dict[category]
             shuffle(data)
+            data = self.preprocess(data)
+
             test_nr = int(len(data) * self.test_split)
             dummy_test_X = data[:test_nr]
             self.test_X += dummy_test_X
@@ -67,6 +71,17 @@ class DataHandler(object):
 
             # Reset data_dict for category
             self.data_dict[category] = []
+
+    def preprocess(self, data):
+        if not self.preprocessing_method:
+            return data
+        elif self.preprocessing_method == "similarities":
+            return data
+        elif self.preprocessing_method == "bag_of_words":
+            return data
+        else:
+            print("Preprocessing method not supported was given.")
+            return data
 
     def get_train(self):
         return self.train_X, self.train_y
