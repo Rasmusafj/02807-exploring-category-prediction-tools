@@ -34,7 +34,7 @@ def generate_corpus(load_only=None,
     # token_min_len = 2
     # token_max_len = 15
     # We should consider using max_token = 30ish (ask TA?)
-    wiki = WikiCorpus(in_file, lemmatize=False, dictionary={})
+    wiki = WikiCorpus(in_file, lemmatize=False, dictionary=True)
 
     # To output pageId and title in the generator
     wiki.metadata = True
@@ -109,7 +109,7 @@ def load_categories_dict(in_filepath="./data/categories_final.txt"):
 
 if __name__ == '__main__':
     # Set load_only_fraction to False, if we want to generate full corpus
-    generate_corpus(load_only=10000)
+    # generate_corpus()
     # load_categories_dict()
     # corpus_list = load_existing_corpus()
     # print(corpus_list[3][-20:])
