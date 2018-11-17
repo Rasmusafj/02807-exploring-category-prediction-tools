@@ -97,8 +97,9 @@ if __name__ == '__main__':
     # Do not loop over all categories, or risk getting banned...
     # This is dummy, to keep track of progress since we
     # do not want to overload Wikipedia's servers
-    current = 14
-    # 13: Category:Nature
+    current = 24
+    # 17 surnames did not correctly happen due to too many pages in the category
+    # How far: 24
     print("Extracting for: {0}, {1}".format(current, all_categories[current]))
 
     # Category extraction from the top

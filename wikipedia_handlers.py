@@ -101,15 +101,73 @@ def data_generator():
         yield data
 
 
-def load_categories_dict(in_filepath="./data/categories_final.txt"):
-    with open(in_filepath, 'r') as f:
-        category_dict = json.load(f)
-    return category_dict
+def create_dataset():
+    all_categories = ["Category:Research",
+                      "Category:Library_science",
+                      "Category:Culture",
+                      "Category:Arts",
+                      "Category:Geography",
+                      "Category:Places",
+                      "Category:Health",
+                      "Category:Self-care",
+                      "Category:History",
+                      "Category:Events",
+                      "Category:Formal sciences",
+                      "Category:Science",
+                      "Category:Natural sciences",
+                      "Category:Nature",
+                      "Category:People",
+                      "Category:Personal_life",
+                      "Category:Self",
+                      #"Category:Surnames",
+                      "Category:Thought",
+                      "Category:Religion",
+                      "Category:Belief",
+                      "Category:Society",
+                      "Category:Social_sciences",
+                      "Category:Technology",
+                      "Category:Applied_sciences"]
+
+    base_path = "./data/categories/"
+    path_cat_gen = lambda x: base_path + x.replace(":", "-") + "-pageids.txt"
+    path_page_gen = lambda x: "./data/articles" + x
+
+    regular_expr_strip = "Category:(.*)"
+
+    for category in all_categories:
+        cat_path = path_cat_gen(category)
+        f_read = open(cat_path, 'r', encoding="utf-8")
+        category_name = re.search(regular_expr_strip, category).group(1)
+
+        print("Processing: {0}".format(category_name))
+        f_write = open(base_path + category_name + ".txt", 'r', encoding="utf-8")
+
+        counter = 0
+        for page_id in f_read.readlines():
+            page_id = page_id.rstrip('\n')
+            filepath = path_page_gen(page_id)
+
+            # If not a in our pre-preprocessed pages, do not include
+            if not os.path.isfile(filepath):
+                continue
+
+            f_page = open(filepath, 'r', encoding="utf-8")
+            f_write.write(f_page.read())
+            f_page.close()
+            counter += 1
+
+            if counter % 300 == 0:
+                print("Number of pages processed: {0}".format(counter))
+
+        print("FINAL number of pages processed: {0}".format(counter))
+        f_read.close()
+        f_write.close()
 
 
 if __name__ == '__main__':
     # Set load_only_fraction to False, if we want to generate full corpus
-    generate_corpus(load_only=10000)
+    # generate_corpus(load_only=10000)
     # load_categories_dict()
     # corpus_list = load_existing_corpus()
     # print(corpus_list[3][-20:])
+    create_dataset()
