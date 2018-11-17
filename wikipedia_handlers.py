@@ -130,7 +130,7 @@ def create_dataset():
 
     base_path = "./data/categories/"
     path_cat_gen = lambda x: base_path + x.replace(":", "-") + "-pageids.txt"
-    path_page_gen = lambda x: "./data/articles" + x
+    path_page_gen = lambda x: "./data/articles/" + x
 
     regular_expr_strip = "Category:(.*)"
 
@@ -140,10 +140,12 @@ def create_dataset():
         category_name = re.search(regular_expr_strip, category).group(1)
 
         print("Processing: {0}".format(category_name))
-        f_write = open(base_path + category_name + ".txt", 'r', encoding="utf-8")
+        f_write = open("./data/dataset/" + category_name + ".txt", 'w', encoding="utf-8")
 
+        all_lines = f_read.readlines()
+        shuffle(all_lines)
         counter = 0
-        for page_id in f_read.readlines():
+        for page_id in all_lines:
             page_id = page_id.rstrip('\n')
             filepath = path_page_gen(page_id)
 
