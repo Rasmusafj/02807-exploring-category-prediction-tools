@@ -1,5 +1,7 @@
 import os
 import re
+from random import shuffle
+
 from utils import construct_set_similarities
 
 
@@ -17,7 +19,12 @@ class DataHandler(object):
 
         print("Initializing data handler...")
 
-        category_files = os.listdir(directory_path)[0:4]
+        category_files = os.listdir(directory_path)
+
+        if debug_number != 0:
+            shuffle(category_files)
+            category_files = category_files[0:5]
+
         regex_category = "(.*)\.txt"
 
         self.test_split = test_split

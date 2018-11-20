@@ -48,6 +48,7 @@ class AbstractModel(ABC):
         """
         Evaluates test accuracy
         """
+        print("Evaluating accuracy on test...")
         predictions = []
         for i in range(len(self.test_X)):
             predictions.append(self.predict(self.test_X[i]))
@@ -84,6 +85,7 @@ class SetSimiliaritiesKNN(AbstractModel):
                  n_shingles=2,
                  **kwargs):
 
+        print("Using Set Similarities KNN...")
         self.k_neighbours = k_neighbours
 
         args_dict = kwargs
@@ -145,6 +147,7 @@ class LSHMinHash(AbstractModel):
                  bands=25,
                  **kwargs):
 
+        print("Using MinHash Local Sensitivity Hashing model...")
         self.k_neighbours = k_neighbours
         self.bands = bands
 
@@ -167,7 +170,7 @@ class LSHMinHash(AbstractModel):
 
         self.r = int(self.data_handler.k / self.bands)
 
-        print("Using bands:{0}, rows: {1}".format(self.bands, self.r))
+        print("Using bands: {0}, rows: {1}".format(self.bands, self.r))
 
         self.bands_dict = {}
 
@@ -258,6 +261,7 @@ if __name__ == '__main__':
         "k_hash_functions": 100,
         "n_shingles": 1,
         "bands": 50,
+        "debug_number": 3000
     }
 
     # Pipeline for the AbstractModel implementation
