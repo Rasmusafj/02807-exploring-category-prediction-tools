@@ -2,8 +2,9 @@
 Utility
 """
 import mmh3
-from datasketch import MinHash
 
+from datasketch import MinHash
+from timeit import default_timer as timer
 
 def signature_permutation(S, k, single=False):
     m = MinHash(num_perm=k)
@@ -70,3 +71,20 @@ def construct_set_similarities(data, k, n, method="hash"):
                 signatures.append(signature_permutation(shingles, k))
 
     return signatures
+
+
+class CustomTimer(object):
+
+    def start(self):
+        self.start_time = timer()
+
+    def stop_timer_and_get_result(self):
+        stop_time = timer()
+        return stop_time - self.start_time
+
+
+# See documentation on tracemalloc
+def total_allocated_memory(snapshot, key_type='lineno'):
+    top_stats = snapshot.statistics(key_type)
+    total = sum(stat.size for stat in top_stats)
+    print("Total allocated size: %.1f KiB" % (total / 1024))

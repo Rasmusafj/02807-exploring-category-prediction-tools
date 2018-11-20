@@ -11,7 +11,6 @@ class DataHandler(object):
                  directory_path="./data/dataset/",
                  test_split=0.2,
                  balance_categories=False,
-                 memory_effecient=False,
                  preprocessing_method=None,
                  k=100,
                  shingles_n=3,
@@ -23,7 +22,7 @@ class DataHandler(object):
 
         if debug_number != 0:
             shuffle(category_files)
-            category_files = category_files[0:5]
+            category_files = category_files[0:10]
 
         regex_category = "(.*)\.txt"
 
@@ -37,33 +36,37 @@ class DataHandler(object):
         self.shingles_n = shingles_n
 
         # Loads all data into a dictionary
-        if not memory_effecient:
-            print("Loading data...")
-            for i, category_file in enumerate(category_files):
-                category = re.search(regex_category, category_file).group(1)
-                print("Preprocessing category: {0}".format(category))
-                data = []
-                f = open(directory_path + category_file, 'r', encoding="utf-8")
-                for line in f.readlines():
-                    line = line.rstrip("\n").split(",")
-                    data.append(line)
 
-                if balance_categories and (self.min_number_pages > len(data) or self.min_number_pages == 0):
-                    self.min_number_pages = len(data)
+        print("Loading data...")
+        for i, category_file in enumerate(category_files):
+            category = re.search(regex_category, category_file).group(1)
+            print("Preprocessing category: {0}".format(category))
+            data = []
+            f = open(directory_path + category_file, 'r', encoding="utf-8")
+            for line in f.readlines():
+                line = line.rstrip("\n").split(",")
+                data.append(line)
 
-                self.data_dict[category] = self.preprocess(data)
-                self.index_to_category_dict[i] = category
-                self.category_to_index[category] = i
+            if balance_categories and (self.min_number_pages > len(data) or self.min_number_pages == 0):
+                self.min_number_pages = len(data)
 
-            if balance_categories:
-                for key in self.data_dict.keys():
-                    self.data_dict[key] = self.data_dict[key][:self.min_number_pages]
+            if debug_number != 0:
+               data = data[:debug_number]
+
+            self.data_dict[category] = self.preprocess(data)
+            self.index_to_category_dict[i] = category
+            self.category_to_index[category] = i
+
+        if balance_categories:
+            for key in self.data_dict.keys():
+                self.data_dict[key] = self.data_dict[key][:self.min_number_pages]
 
         self.train_X = []
         self.train_y = []
         self.test_X = []
         self.test_y = []
         self.generate_data_splits()
+
 
     def get_data_dict(self):
         return self.data_dict

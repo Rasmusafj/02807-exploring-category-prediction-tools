@@ -8,8 +8,8 @@ import numpy as np
 from abc import ABC, abstractmethod
 from DataHandler import DataHandler
 from utils import jaccard_distance
-from sklearn.cluster import KMeans
 import mmh3
+
 
 class AbstractModel(ABC):
     """
@@ -17,6 +17,7 @@ class AbstractModel(ABC):
     """
 
     def __init__(self, **kwargs):
+
         self.data_handler = DataHandler(balance_categories=True, **kwargs)
 
         self.train_X = self.data_handler.train_X
@@ -52,8 +53,10 @@ class AbstractModel(ABC):
         predictions = []
         for i in range(len(self.test_X)):
             predictions.append(self.predict(self.test_X[i]))
+        accuracy = np.sum((np.asarray(predictions) - self.test_y) == 0) / len(self.test_X)
+        print("Accuracy for test set: {0}".format(accuracy))
+        return accuracy
 
-        return np.sum((np.asarray(predictions) - self.test_y) == 0) / len(self.test_X)
 
     def predict_new(self, documents):
         """
@@ -67,7 +70,6 @@ class AbstractModel(ABC):
             predictions.append(self.data_handler.index_to_category_dict[prediction])
 
         return predictions
-
 
     def preprocess_documents(self, documents):
         """
@@ -148,6 +150,7 @@ class LSHMinHash(AbstractModel):
                  **kwargs):
 
         print("Using MinHash Local Sensitivity Hashing model...")
+
         self.k_neighbours = k_neighbours
         self.bands = bands
 
@@ -185,6 +188,7 @@ class LSHMinHash(AbstractModel):
 
         self.test_X = np.asarray(self.test_X)
         self.test_y = np.asarray(self.test_y)
+
 
     def predict(self, x):
         # Get closes k neighbours
@@ -229,6 +233,8 @@ class LSHMinHash(AbstractModel):
 
 class DummyMachineLearningModel(AbstractModel):
     def __init__(self, **kwargs):
+
+        # The following must be called
         args_dict = kwargs
         args_dict["preprocessing_method"] = "bag_of_words"
         super().__init__(**args_dict)
