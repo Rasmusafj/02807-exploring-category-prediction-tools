@@ -1,30 +1,37 @@
-import numpy as np
 import os
 import re
-from random import shuffle
+from utils import construct_set_similarities
 
 
 class DataHandler(object):
 
     def __init__(self,
                  directory_path="./data/dataset/",
-                 test_split = 0.2,
+                 test_split=0.2,
                  balance_categories=False,
                  memory_effecient=False,
-                 preprocessing_method=None):
+                 preprocessing_method=None,
+                 k=100,
+                 shingles_n=3,
+                 debug_number=0):
 
-        category_files = os.listdir(directory_path)
+        print("Initializing data handler...")
+
+        category_files = os.listdir(directory_path)[0:4]
         regex_category = "(.*)\.txt"
 
         self.test_split = test_split
         self.data_dict = {}
         self.index_to_category_dict = {}
         self.category_to_index = {}
-        self.min_number_pages = 0
+        self.min_number_pages = debug_number
         self.preprocessing_method = preprocessing_method
+        self.k = k
+        self.shingles_n = shingles_n
 
         # Loads all data into a dictionary
         if not memory_effecient:
+            print("Loading data...")
             for i, category_file in enumerate(category_files):
                 category = re.search(regex_category, category_file).group(1)
                 data = []
@@ -56,8 +63,8 @@ class DataHandler(object):
     def generate_data_splits(self):
 
         for category in self.data_dict.keys():
+            print("Preprocessing category: {0}".format(category))
             data = self.data_dict[category]
-            shuffle(data)
             data = self.preprocess(data)
 
             test_nr = int(len(data) * self.test_split)
@@ -75,10 +82,14 @@ class DataHandler(object):
     def preprocess(self, data):
         if not self.preprocessing_method:
             return data
-        elif self.preprocessing_method == "similarities":
-            return data
+
+        elif self.preprocessing_method == "min_hash_signatures":
+            return construct_set_similarities(data, self.k, self.shingles_n, method="permutation")
+
         elif self.preprocessing_method == "bag_of_words":
+            print("BAG OF WORDS NOT IMPLEMENTED")
             return data
+
         else:
             print("Preprocessing method not supported was given.")
             return data
@@ -91,6 +102,7 @@ class DataHandler(object):
 
 
 if __name__ == '__main__':
-    data_handler = DataHandler(balance_categories=True)
+    data_handler = DataHandler(balance_categories=True,
+                               preprocessing_method="min_hash_signatures")
     train_X, train_y = data_handler.get_train()
     test_X, test_y = data_handler.get_test()
