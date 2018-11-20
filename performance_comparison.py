@@ -1,5 +1,5 @@
 """
-Functions to evaluate the implemented models.
+Functions to evaluate the performance of the implemented models.
 
 From project description:
 
