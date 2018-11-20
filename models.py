@@ -261,7 +261,7 @@ if __name__ == '__main__':
         "k_hash_functions": 100,
         "n_shingles": 1,
         "bands": 50,
-        "debug_number": 3000
+        "debug_number": 0
     }
 
     # Pipeline for the AbstractModel implementation

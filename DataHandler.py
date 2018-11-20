@@ -41,6 +41,7 @@ class DataHandler(object):
             print("Loading data...")
             for i, category_file in enumerate(category_files):
                 category = re.search(regex_category, category_file).group(1)
+                print("Preprocessing category: {0}".format(category))
                 data = []
                 f = open(directory_path + category_file, 'r', encoding="utf-8")
                 for line in f.readlines():
@@ -50,7 +51,7 @@ class DataHandler(object):
                 if balance_categories and (self.min_number_pages > len(data) or self.min_number_pages == 0):
                     self.min_number_pages = len(data)
 
-                self.data_dict[category] = data
+                self.data_dict[category] = self.preprocess(data)
                 self.index_to_category_dict[i] = category
                 self.category_to_index[category] = i
 
@@ -70,9 +71,8 @@ class DataHandler(object):
     def generate_data_splits(self):
 
         for category in self.data_dict.keys():
-            print("Preprocessing category: {0}".format(category))
+
             data = self.data_dict[category]
-            data = self.preprocess(data)
 
             test_nr = int(len(data) * self.test_split)
             dummy_test_X = data[:test_nr]
