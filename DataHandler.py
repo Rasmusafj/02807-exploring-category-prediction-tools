@@ -96,9 +96,9 @@ class DataHandler(object):
         elif self.preprocessing_method == "min_hash_signatures":
             return construct_set_similarities(data, self.k, self.shingles_n, method="permutation")
 
-        elif self.preprocessing_method == "bag_of_words":
-            print("BAG OF WORDS NOT IMPLEMENTED")
-            return data
+        elif self.preprocessing_method == "hashing_vectorize":
+            print("HASHING VECTORIZE NOT IMPLEMENTED")
+            return construct_token_frequencies()
 
         else:
             print("Preprocessing method not supported was given.")

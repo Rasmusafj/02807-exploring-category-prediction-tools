@@ -73,6 +73,12 @@ def construct_set_similarities(data, k, n, method="hash"):
     return signatures
 
 
+###############
+def construct_token_frequencies(data):
+
+    return 0
+###############
+
 class CustomTimer(object):
 
     def start(self):

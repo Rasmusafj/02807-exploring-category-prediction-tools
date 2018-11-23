@@ -9,6 +9,7 @@ from abc import ABC, abstractmethod
 from DataHandler import DataHandler
 from utils import jaccard_distance
 import mmh3
+from sklearn import svm
 
 
 class AbstractModel(ABC):
@@ -232,26 +233,53 @@ class LSHMinHash(AbstractModel):
 
 
 class DummyMachineLearningModel(AbstractModel):
-    def __init__(self, **kwargs):
+    def __init__(self,
+                 C_id=1.0,
+                 kernel_id='rbf',
+                 degree_id=3,
+                 gamma_id='auto',
+                 **kwargs):
+
+        print("Using Support Vector Classification...")
+
+        self.C_id = C_id
+        self.kernel_id = kernel_id
+        self.degree_id = degree_id
+        self.gamma_id = gamma_id
 
         # The following must be called
         args_dict = kwargs
-        args_dict["preprocessing_method"] = "bag_of_words"
+        args_dict["preprocessing_method"] = "hashing_vectorize"
         super().__init__(**args_dict)
         self.fit_data()
 
     def fit_data(self):
-        print(self.not_implemented_string)
+
+        # NOTE: could use CV to choose optimal kernel function.
+
+        self.train_X = np.asarray(self.train_X)
+        self.train_y = np.asarray(self.train_y)
+
+        model = svm.SVC(C=self.C_id,
+                        kernel=self.kernel_id,
+                        degree=self.degree_id,
+                        gamma=self.gamma_id)
+        self.model = model.fit(self.train_X, self.train_y)
+
 
     def predict(self, x):
-        print(self.not_implemented_string)
+
+        self.test_X = np.asarray(self.test_X)
+        #self.test_y = np.asarray(self.test_y)
+
+        return self.model.predict(self.test_X)
 
 
 if __name__ == '__main__':
     # Testing
 
     # KNNSimilarities no LSH
-    """ 
+    """
     arguments = {
         "k_neighbours": 10,
         "k_hash_functions": 300,
