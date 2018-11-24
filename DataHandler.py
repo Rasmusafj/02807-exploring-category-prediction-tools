@@ -3,6 +3,7 @@ import re
 from random import shuffle
 
 from utils import construct_set_similarities
+from utils import construct_token_frequencies
 
 
 class DataHandler(object):
@@ -14,7 +15,8 @@ class DataHandler(object):
                  preprocessing_method=None,
                  k=100,
                  shingles_n=3,
-                 debug_number=0):
+                 debug_number=0,
+                 h=2**14):
 
         print("Initializing data handler...")
 
@@ -22,7 +24,7 @@ class DataHandler(object):
 
         if debug_number != 0:
             shuffle(category_files)
-            category_files = category_files[0:10]
+            category_files = category_files[0:5]
 
         regex_category = "(.*)\.txt"
 
@@ -34,6 +36,7 @@ class DataHandler(object):
         self.preprocessing_method = preprocessing_method
         self.k = k
         self.shingles_n = shingles_n
+        self.h = h
 
         # Loads all data into a dictionary
 
@@ -97,8 +100,7 @@ class DataHandler(object):
             return construct_set_similarities(data, self.k, self.shingles_n, method="permutation")
 
         elif self.preprocessing_method == "hashing_vectorize":
-            print("HASHING VECTORIZE NOT IMPLEMENTED")
-            return construct_token_frequencies()
+            return construct_token_frequencies(data, self.h)
 
         else:
             print("Preprocessing method not supported was given.")
@@ -113,6 +115,7 @@ class DataHandler(object):
 
 if __name__ == '__main__':
     data_handler = DataHandler(balance_categories=True,
-                               preprocessing_method="min_hash_signatures")
+                               preprocessing_method="hashing_vectorize",
+                               debug_number=50)
     train_X, train_y = data_handler.get_train()
     test_X, test_y = data_handler.get_test()

@@ -6,6 +6,8 @@ import mmh3
 from datasketch import MinHash
 from timeit import default_timer as timer
 
+from sklearn.feature_extraction.text import HashingVectorizer
+
 def signature_permutation(S, k, single=False):
     m = MinHash(num_perm=k)
     for element in S:
@@ -73,11 +75,16 @@ def construct_set_similarities(data, k, n, method="hash"):
     return signatures
 
 
-###############
-def construct_token_frequencies(data):
+def construct_token_frequencies(data, h):
 
-    return 0
-###############
+    vectorizer = HashingVectorizer(n_features=h, stop_words="english", lowercase=False) #, non_negative=True,)
+    token_frequency = []
+    for document in data:
+        token_frequency.append(vectorizer.transform([" ".join(document)]).toarray())
+        print(vectorizer.transform([" ".join(document)]).toarray())
+
+    return np.asarray(token_frequency)
+
 
 class CustomTimer(object):
 

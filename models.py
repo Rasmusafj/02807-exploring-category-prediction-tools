@@ -232,7 +232,7 @@ class LSHMinHash(AbstractModel):
         return max(set(closest_k_neighbours_categories), key=closest_k_neighbours_categories.count)
 
 
-class DummyMachineLearningModel(AbstractModel):
+class SVCMachineLearningModel(AbstractModel):
     def __init__(self,
                  C_id=1.0,
                  kernel_id='rbf',
@@ -266,7 +266,6 @@ class DummyMachineLearningModel(AbstractModel):
                         gamma=self.gamma_id)
         self.model = model.fit(self.train_X, self.train_y)
 
-
     def predict(self, x):
 
         self.test_X = np.asarray(self.test_X)
@@ -290,15 +289,19 @@ if __name__ == '__main__':
     accuracy = model.evaluate_on_test()
     print("Accuracy is: {0}".format(accuracy))
     """
+    #arguments = {
+    #    "k_neighbours": 3,
+    #    "k_hash_functions": 100,
+    #    "n_shingles": 1,
+    #    "bands": 50,
+    #    "debug_number": 0
+    #}
+
     arguments = {
-        "k_neighbours": 3,
-        "k_hash_functions": 100,
-        "n_shingles": 1,
-        "bands": 50,
-        "debug_number": 0
-    }
+        "debug_number": 5
+        }
 
     # Pipeline for the AbstractModel implementation
-    model = LSHMinHash(**arguments)
+    model = SVCMachineLearningModel(**arguments)
     accuracy = model.evaluate_on_test()
     print("Accuracy is: {0}".format(accuracy))
