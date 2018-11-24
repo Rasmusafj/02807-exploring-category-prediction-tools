@@ -259,6 +259,8 @@ class SVCMachineLearningModel(AbstractModel):
 
         self.train_X = np.asarray(self.train_X)
         self.train_y = np.asarray(self.train_y)
+        self.test_X = np.asarray(self.test_X)
+        self.test_y = np.asarray(self.test_y)
 
         model = svm.SVC(C=self.C_id,
                         kernel=self.kernel_id,
@@ -267,11 +269,8 @@ class SVCMachineLearningModel(AbstractModel):
         self.model = model.fit(self.train_X, self.train_y)
 
     def predict(self, x):
-
-        self.test_X = np.asarray(self.test_X)
-        #self.test_y = np.asarray(self.test_y)
-
-        return self.model.predict(self.test_X)
+        # Note since x is a single data point
+        return self.model.predict([x])[0]
 
 
 if __name__ == '__main__':
@@ -298,7 +297,9 @@ if __name__ == '__main__':
     #}
 
     arguments = {
-        "debug_number": 5
+        "debug_number": 500,
+        "normalize": True,
+        "h": 2**7
         }
 
     # Pipeline for the AbstractModel implementation

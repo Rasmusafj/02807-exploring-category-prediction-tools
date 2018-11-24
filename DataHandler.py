@@ -1,9 +1,9 @@
 import os
 import re
 from random import shuffle
+from sklearn.feature_extraction import FeatureHasher
 
-from utils import construct_set_similarities
-from utils import construct_token_frequencies
+from utils import construct_set_similarities, construct_token_frequencies
 
 
 class DataHandler(object):
@@ -16,7 +16,8 @@ class DataHandler(object):
                  k=100,
                  shingles_n=3,
                  debug_number=0,
-                 h=2**14):
+                 h=2**6,
+                 normalize=True):
 
         print("Initializing data handler...")
 
@@ -37,6 +38,10 @@ class DataHandler(object):
         self.k = k
         self.shingles_n = shingles_n
         self.h = h
+        self.normalize = normalize
+
+        if self.preprocessing_method and preprocessing_method == "hashing_vectorize":
+            self.vectorizer = FeatureHasher(n_features=self.h)  # , non_negative=True,)
 
         # Loads all data into a dictionary
 
@@ -100,7 +105,7 @@ class DataHandler(object):
             return construct_set_similarities(data, self.k, self.shingles_n, method="permutation")
 
         elif self.preprocessing_method == "hashing_vectorize":
-            return construct_token_frequencies(data, self.h)
+            return construct_token_frequencies(data, self.vectorizer, self.normalize)
 
         else:
             print("Preprocessing method not supported was given.")
