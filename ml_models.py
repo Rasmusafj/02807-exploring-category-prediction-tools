@@ -265,7 +265,7 @@ class SVCMachineLearningModel(AbstractModel):
         args_dict = kwargs
         args_dict["preprocessing_method"] = "hashing_vectorize"
         super().__init__(**args_dict)
-        self.fit_data()
+        #self.fit_data()
 
     def fit_data(self):
         # NOTE: could use CV to choose optimal kernel function.
