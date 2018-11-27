@@ -7,10 +7,10 @@ General code should be put in the abstract class.
 import numpy as np
 from abc import ABC, abstractmethod
 from DataHandler import DataHandler
-from utils import jaccard_distance
+from utils import jaccard_distance, plot_confusion_matrix
 import mmh3
 from sklearn import svm
-
+from sklearn.metrics import confusion_matrix
 
 class AbstractModel(ABC):
     """
@@ -58,7 +58,6 @@ class AbstractModel(ABC):
         print("Accuracy for test set: {0}".format(accuracy))
         return accuracy
 
-
     def predict_new(self, documents):
         """
         :documents: List of documents to be predicted
@@ -68,7 +67,10 @@ class AbstractModel(ABC):
         documents = self.preprocess_documents(documents)
         for document in documents:
             prediction = self.predict(document)
-            predictions.append(self.data_handler.index_to_category_dict[prediction])
+            if prediction == -1:
+                predictions.append("Undefined")
+            else:
+                predictions.append(self.data_handler.index_to_category_dict[prediction])
 
         return predictions
 
@@ -78,6 +80,20 @@ class AbstractModel(ABC):
         :return: preprocessed documents
         """
         return self.data_handler.preprocess(documents)
+
+    def generate_confusion_matrix(self):
+        predictions = []
+        pred_true = []
+        for i in range(len(self.test_X)):
+            predictions.append(self.predict(self.test_X[i]))
+            pred_true.append(self.test_y[i])
+
+        cnf_matrix = confusion_matrix(pred_true, predictions)
+        print(cnf_matrix)
+        classes = sorted(self.data_handler.index_to_category_dict.items())
+        classes = list(map(lambda x: x[1], classes))
+        print(classes)
+        plot_confusion_matrix(cnf_matrix, classes, normalize=True)
 
 
 class SetSimiliaritiesKNN(AbstractModel):
@@ -118,19 +134,19 @@ class SetSimiliaritiesKNN(AbstractModel):
             for j in range(self.k_neighbours - 1):
                 if distance > closest_k_neighbours[j + 1]:
                     if j == self.k_neighbours - 2:
-                        closest_k_neighbours.insert(j+2, distance)
+                        closest_k_neighbours.insert(j + 2, distance)
                         closest_k_neighbours.pop(0)
 
-                        closest_k_neighbours_categories.insert(j+2, self.train_y[i])
+                        closest_k_neighbours_categories.insert(j + 2, self.train_y[i])
                         closest_k_neighbours_categories.pop(0)
 
                     continue
 
                 if distance > closest_k_neighbours[j]:
-                    closest_k_neighbours.insert(j+1, distance)
+                    closest_k_neighbours.insert(j + 1, distance)
                     closest_k_neighbours.pop(0)
 
-                    closest_k_neighbours_categories.insert(j+1, self.train_y[i])
+                    closest_k_neighbours_categories.insert(j + 1, self.train_y[i])
                     closest_k_neighbours_categories.pop(0)
                     break
                 else:
@@ -181,7 +197,7 @@ class LSHMinHash(AbstractModel):
         # Find all indices for X where first
         for i in range(len(self.train_X)):
             for j in range(0, self.data_handler.k, self.r):
-                hashed_value = mmh3.hash(self.train_X[i][j:j+self.r], j)
+                hashed_value = mmh3.hash(self.train_X[i][j:j + self.r], j)
                 if hashed_value not in self.bands_dict:
                     self.bands_dict[hashed_value] = [i]
                 else:
@@ -189,7 +205,6 @@ class LSHMinHash(AbstractModel):
 
         self.test_X = np.asarray(self.test_X)
         self.test_y = np.asarray(self.test_y)
-
 
     def predict(self, x):
         # Get closes k neighbours
@@ -239,7 +254,6 @@ class SVCMachineLearningModel(AbstractModel):
                  degree_id=3,
                  gamma_id='auto',
                  **kwargs):
-
         print("Using Support Vector Classification...")
 
         self.C_id = C_id
@@ -254,7 +268,6 @@ class SVCMachineLearningModel(AbstractModel):
         self.fit_data()
 
     def fit_data(self):
-
         # NOTE: could use CV to choose optimal kernel function.
 
         self.train_X = np.asarray(self.train_X)
@@ -288,14 +301,27 @@ if __name__ == '__main__':
     accuracy = model.evaluate_on_test()
     print("Accuracy is: {0}".format(accuracy))
     """
-    #arguments = {
-    #    "k_neighbours": 3,
-    #    "k_hash_functions": 100,
-    #    "n_shingles": 1,
-    #    "bands": 50,
-    #    "debug_number": 0
-    #}
+    arguments = {
+        "k_neighbours": 20,
+        "k_hash_functions": 400,
+        "n_shingles": 1,
+        "bands": 200,
+        "debug_number": 0
+    }
+    model = LSHMinHash(**arguments)
+    model.generate_confusion_matrix()
+    """
+    k_neighbours = [3, 5, 10, 20, 50]
 
+    for k in k_neighbours:
+        model.k_neighbours = k
+        accuracy = model.evaluate_on_test()
+        print("k: {0}".format(k))
+        print("Accuracy is: {0}".format(accuracy))
+
+    model.data_handler.preprocess([])
+    """
+    """
     arguments = {
         "debug_number": 500,
         "normalize": True,
@@ -306,3 +332,4 @@ if __name__ == '__main__':
     model = SVCMachineLearningModel(**arguments)
     accuracy = model.evaluate_on_test()
     print("Accuracy is: {0}".format(accuracy))
+    """

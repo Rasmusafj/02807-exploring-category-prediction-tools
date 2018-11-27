@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>02807 - Category Prediction Tool</h1>
+    </div>
+
+    <form action="{% url 'prediction:predict' %}" method="post">
+        {% csrf_token %}
+
+        <h4>
+            Specify full path to tokenized file.
+        </h4>
+
+        path: <input id="path" name="path" type="text" style="width: 500px;">
+
+        </br>
+        </br>
+        </br>
+        </br>
+        <button type="submit" class="btn btn-primary">
+            Predict
+        </button>
+    </form>
+
+    {% if LSH %}
+        <div class="row">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-6" align="left">
+            <h4>
+                Predictions:
+            </h4>
+            <p>
+                LSH: {{ LSH }}, SVC: {{ SVC }}
+            </p>
+        </div>
+
+        </div>
+    {% endif %}
+{% endblock %}

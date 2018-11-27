@@ -8,7 +8,7 @@ From project description:
 
 """
 import tracemalloc
-from models import LSHMinHash
+from ml_models import LSHMinHash
 from utils import CustomTimer, total_allocated_memory
 
 
