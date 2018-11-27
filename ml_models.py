@@ -81,7 +81,7 @@ class AbstractModel(ABC):
         """
         return self.data_handler.preprocess(documents)
 
-    def generate_confusion_matrix(self):
+    def generate_confusion_matrix(self, title, model):
         predictions = []
         pred_true = []
         for i in range(len(self.test_X)):
@@ -89,11 +89,10 @@ class AbstractModel(ABC):
             pred_true.append(self.test_y[i])
 
         cnf_matrix = confusion_matrix(pred_true, predictions)
-        print(cnf_matrix)
         classes = sorted(self.data_handler.index_to_category_dict.items())
         classes = list(map(lambda x: x[1], classes))
-        print(classes)
-        plot_confusion_matrix(cnf_matrix, classes, normalize=True)
+        plot_confusion_matrix(cnf_matrix, classes, title=title,
+                              model=model, normalize=True)
 
 
 class SetSimiliaritiesKNN(AbstractModel):
@@ -306,10 +305,10 @@ if __name__ == '__main__':
         "k_hash_functions": 400,
         "n_shingles": 1,
         "bands": 200,
-        "debug_number": 0
+        "debug_number": 40
     }
     model = LSHMinHash(**arguments)
-    model.generate_confusion_matrix()
+    model.generate_confusion_matrix("Confusion matrix LSH", "LSH")
     """
     k_neighbours = [3, 5, 10, 20, 50]
 

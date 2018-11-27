@@ -25,7 +25,7 @@ class DataHandler(object):
 
         if debug_number != 0:
             shuffle(category_files)
-            category_files = category_files[0:20]
+            category_files = category_files[0:24]
 
         regex_category = "(.*)\.txt"
 
@@ -121,6 +121,6 @@ class DataHandler(object):
 if __name__ == '__main__':
     data_handler = DataHandler(balance_categories=True,
                                preprocessing_method="hashing_vectorize",
-                               debug_number=0)
+                               debug_number=500)
     train_X, train_y = data_handler.get_train()
     test_X, test_y = data_handler.get_test()

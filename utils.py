@@ -113,9 +113,12 @@ def total_allocated_memory(snapshot, key_type='lineno'):
 
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
-                          title='Confusion matrix',
+                          model="LSH",
+                          title='Confusion matrix for LSH',
                           cmap=plt.cm.Blues):
     """
+    Implementation taken from:
+        https://scikit-learn.org/stable/auto_examples/model_selection/plot_confusion_matrix.html#sphx-glr-auto-examples-model-selection-plot-confusion-matrix-py
     This function prints and plots the confusion matrix.
     Normalization can be applied by setting `normalize=True`.
     """
@@ -125,11 +128,13 @@ def plot_confusion_matrix(cm, classes,
     else:
         print('Confusion matrix, without normalization')
 
+    plt.figure(figsize=(13,13))
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
+
     plt.title(title)
-    plt.colorbar()
+    plt.colorbar(fraction=0.046, pad=0.04)
     tick_marks = np.arange(len(classes))
-    plt.xticks(tick_marks, classes)
+    plt.xticks(tick_marks, classes, rotation=90)
     plt.yticks(tick_marks, classes)
 
     fmt = '.2f' if normalize else 'd'
@@ -142,4 +147,5 @@ def plot_confusion_matrix(cm, classes,
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     plt.tight_layout()
+    plt.savefig("./figs/" + model + ".pdf")
     plt.show()
