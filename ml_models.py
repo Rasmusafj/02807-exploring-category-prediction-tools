@@ -12,6 +12,7 @@ import mmh3
 from sklearn import svm
 from sklearn.metrics import confusion_matrix
 
+
 class AbstractModel(ABC):
     """
     Base class for all implemented models.
@@ -91,8 +92,18 @@ class AbstractModel(ABC):
         cnf_matrix = confusion_matrix(pred_true, predictions)
         classes = sorted(self.data_handler.index_to_category_dict.items())
         classes = list(map(lambda x: x[1], classes))
-        plot_confusion_matrix(cnf_matrix, classes, title=title,
-                              model=model, normalize=True)
+
+        # Since KNN might output -1 in case no candidates are found
+        negative = np.asarray(predictions) == -1
+        if np.any(negative):
+            cnf_matrix = np.delete(cnf_matrix, (0), axis=0)
+            print("Nr of negative predictions: {0}".format(np.sum(negative)))
+            classes_x = ["No candidates"] + classes
+            plot_confusion_matrix(cnf_matrix, classes, classes_x=classes_x, title=title,
+                                  model=model, normalize=True)
+        else:
+            plot_confusion_matrix(cnf_matrix, classes, title=title,
+                                  model=model, normalize=True)
 
 
 class SetSimiliaritiesKNN(AbstractModel):
@@ -264,7 +275,7 @@ class SVCMachineLearningModel(AbstractModel):
         args_dict = kwargs
         args_dict["preprocessing_method"] = "hashing_vectorize"
         super().__init__(**args_dict)
-        #self.fit_data()
+        # self.fit_data()
 
     def fit_data(self):
         # NOTE: could use CV to choose optimal kernel function.
@@ -304,10 +315,11 @@ if __name__ == '__main__':
         "k_neighbours": 20,
         "k_hash_functions": 400,
         "n_shingles": 1,
-        "bands": 200,
-        "debug_number": 40
+        "bands": 100,
+        "debug_number": 0
     }
     model = LSHMinHash(**arguments)
+    # model.evaluate_on_test()
     model.generate_confusion_matrix("Confusion matrix LSH", "LSH")
     """
     k_neighbours = [3, 5, 10, 20, 50]
