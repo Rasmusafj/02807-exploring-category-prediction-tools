@@ -8,17 +8,17 @@ From project description:
 
 """
 import tracemalloc
-from ml_models import LSHMinHash
+from ml_models import LSHMinHash, SVCMachineLearningModel
 from utils import CustomTimer, total_allocated_memory
 
 
 def get_model(model):
     if model == "LSH":
         arguments = {
-            "k_neighbours": 3,
-            "k_hash_functions": 100,
+            "k_neighbours": 15,
+            "k_hash_functions": 400,
             "n_shingles": 1,
-            "bands": 50,
+            "bands": 200,
             "debug_number": 0
         }
         return LSHMinHash(**arguments)
@@ -45,7 +45,8 @@ total_time = custom_timer.stop_timer_and_get_result()
 print("Took {0} seconds to evaluate model.".format(total_time))
 snapshot = tracemalloc.take_snapshot()
 total_allocated_memory(snapshot)
-
+model.generate_confusion_matrix("Confusion matrix LSH", "LSH")
+"""
 #SVM
 '''
 tracemalloc.start()
@@ -55,12 +56,14 @@ model = get_model("SVM")
 total_time = custom_timer.stop_timer_and_get_result()
 print("Took {0} seconds to initialize model and preprocess data.".format(total_time))
 
+# KNN
 custom_timer.start()
 model.evaluate_on_test()
 total_time = custom_timer.stop_timer_and_get_result()
 print("Took {0} seconds to evaluate model.".format(total_time))
 snapshot = tracemalloc.take_snapshot()
 total_allocated_memory(snapshot)
+<<<<<<< HEAD
 '''
 
 """
@@ -72,3 +75,6 @@ for k_neighbour in k_neighbours_list:
     accuracy = model.evaluate_on_test()
     print("Accuracy for k={0} is: {1}".format(k_neighbour, accuracy))
 """
+=======
+"""
+>>>>>>> 433061f7ecdf3401cfce9b3cbe604125e07c8e78
