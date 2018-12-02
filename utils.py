@@ -8,7 +8,11 @@ import numpy as np
 from datasketch import MinHash
 from timeit import default_timer as timer
 from collections import Counter
-import matplotlib.pyplot as plt
+
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib import pyplot as plt
+
 
 def signature_permutation(S, k, single=False):
     m = MinHash(num_perm=k)

@@ -263,6 +263,8 @@ class SVCMachineLearningModel(AbstractModel):
                  kernel_id='rbf',
                  degree_id=3,
                  gamma_id='auto',
+                 verbose=False,
+                 max_iter=-1,
                  **kwargs):
         print("Using Support Vector Classification...")
 
@@ -285,15 +287,17 @@ class SVCMachineLearningModel(AbstractModel):
         self.test_X = np.asarray(self.test_X)
         self.test_y = np.asarray(self.test_y)
 
-        model = svm.SVC(C=self.C_id,
+        self.model = svm.SVC(C=self.C_id,
                         kernel=self.kernel_id,
                         degree=self.degree_id,
-                        gamma=self.gamma_id)
-        self.model = model.fit(self.train_X, self.train_y)
+                        gamma=self.gamma_id,
+                        verbose=True,
+                        max_iter=5000000)
+        self.modelfit = self.model.fit(self.train_X, self.train_y)
 
     def predict(self, x):
         # Note since x is a single data point
-        return self.model.predict([x])[0]
+        return self.modelfit.predict([x])[0]
 
 
 if __name__ == '__main__':
