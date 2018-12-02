@@ -19,7 +19,7 @@ def get_model(model):
             "k_hash_functions": 100,
             "n_shingles": 1,
             "bands": 50,
-            "debug_number": 100
+            "debug_number": 0
         }
         return LSHMinHash(**arguments)
     if model == "SVM":
@@ -47,6 +47,7 @@ snapshot = tracemalloc.take_snapshot()
 total_allocated_memory(snapshot)
 
 #SVM
+'''
 tracemalloc.start()
 custom_timer = CustomTimer()
 custom_timer.start()
@@ -60,6 +61,7 @@ total_time = custom_timer.stop_timer_and_get_result()
 print("Took {0} seconds to evaluate model.".format(total_time))
 snapshot = tracemalloc.take_snapshot()
 total_allocated_memory(snapshot)
+'''
 
 """
 k_neighbours_list = [3, 5, 10, 20, 40]
