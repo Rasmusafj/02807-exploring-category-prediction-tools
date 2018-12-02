@@ -60,6 +60,7 @@ def generate_corpus(load_only=None,
 
     print('Processed ' + str(counter) + ' articles')
 
+
 def create_dataset():
     all_categories = ["Category:Research",
                       "Category:Library_science",
