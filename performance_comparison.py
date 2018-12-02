@@ -49,6 +49,7 @@ model.generate_confusion_matrix("Confusion matrix LSH", "LSH")
 
 """
 #SVM
+'''
 tracemalloc.start()
 custom_timer = CustomTimer()
 custom_timer.start()
@@ -63,4 +64,18 @@ total_time = custom_timer.stop_timer_and_get_result()
 print("Took {0} seconds to evaluate model.".format(total_time))
 snapshot = tracemalloc.take_snapshot()
 total_allocated_memory(snapshot)
+<<<<<<< HEAD
+'''
+
 """
+k_neighbours_list = [3, 5, 10, 20, 40]
+
+# Pipeline for the AbstractModel implementation
+for k_neighbour in k_neighbours_list:
+    model.k_neighbours = k_neighbour
+    accuracy = model.evaluate_on_test()
+    print("Accuracy for k={0} is: {1}".format(k_neighbour, accuracy))
+"""
+=======
+"""
+>>>>>>> 433061f7ecdf3401cfce9b3cbe604125e07c8e78
