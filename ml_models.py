@@ -7,7 +7,7 @@ General code should be put in the abstract class.
 import numpy as np
 from abc import ABC, abstractmethod
 from DataHandler import DataHandler
-from utils import jaccard_distance, plot_confusion_matrix
+from utils import jaccard_distance, plot_confusion_matrix, jaccard_estimation
 import mmh3
 from sklearn import svm
 from sklearn.metrics import confusion_matrix
@@ -140,7 +140,7 @@ class SetSimiliaritiesKNN(AbstractModel):
         closest_k_neighbours_categories = [-1] * self.k_neighbours
 
         for i in range(len(self.train_X)):
-            distance = jaccard_distance(x, self.train_X[i])
+            distance = jaccard_estimation(x, self.train_X[i])
             for j in range(self.k_neighbours - 1):
                 if distance > closest_k_neighbours[j + 1]:
                     if j == self.k_neighbours - 2:
@@ -231,7 +231,7 @@ class LSHMinHash(AbstractModel):
 
         indices_to_try = set(indices_to_try)
         for i in indices_to_try:
-            distance = jaccard_distance(x, self.train_X[i])
+            distance = jaccard_estimation(x, self.train_X[i])
             for j in range(self.k_neighbours - 1):
                 if distance > closest_k_neighbours[j + 1]:
                     if j == self.k_neighbours - 2:
@@ -315,18 +315,18 @@ if __name__ == '__main__':
     accuracy = model.evaluate_on_test()
     print("Accuracy is: {0}".format(accuracy))
     """
-    """
+
     arguments = {
-        "k_neighbours": 20,
+        "k_neighbours": 15,
         "k_hash_functions": 400,
         "n_shingles": 1,
-        "bands": 100,
+        "bands": 200,
         "debug_number": 0
     }
     model = LSHMinHash(**arguments)
-    # model.evaluate_on_test()
-    model.generate_confusion_matrix("Confusion matrix LSH", "LSH")
-    """
+    model.evaluate_on_test()
+    # model.generate_confusion_matrix("Confusion matrix LSH", "LSH")
+
 
     """
     k_neighbours = [3, 5, 10, 20, 50]
@@ -339,7 +339,7 @@ if __name__ == '__main__':
 
     model.data_handler.preprocess([])
     """
-
+    """
     arguments = {
         "debug_number": 20,
         "normalize": True,
@@ -351,4 +351,4 @@ if __name__ == '__main__':
     model.generate_confusion_matrix("SUP", "SUPSVM")
     accuracy = model.evaluate_on_test()
     print("Accuracy is: {0}".format(accuracy))
-
+    """

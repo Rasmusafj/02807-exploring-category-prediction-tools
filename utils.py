@@ -31,6 +31,12 @@ def jaccard_distance(S, T):
     return len(S & T) / len(S | T)
 
 
+def jaccard_estimation(S, T):
+    equals = np.sum(S == T)
+    k = len(S)
+    return equals/k
+
+
 def signature(S, k, single=False):
     sig = []
 

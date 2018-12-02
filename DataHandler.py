@@ -25,7 +25,7 @@ class DataHandler(object):
 
         if debug_number != 0:
             shuffle(category_files)
-            category_files = category_files[0:4]
+            category_files = category_files[0:6]
 
         regex_category = "(.*)\.txt"
 
