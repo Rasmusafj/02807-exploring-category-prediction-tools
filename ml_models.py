@@ -7,7 +7,7 @@ General code should be put in the abstract class.
 import numpy as np
 from abc import ABC, abstractmethod
 from DataHandler import DataHandler
-from utils import jaccard_distance, plot_confusion_matrix, jaccard_estimation
+from utils import plot_confusion_matrix, jaccard_estimation
 import mmh3
 from sklearn import svm
 from sklearn.metrics import confusion_matrix

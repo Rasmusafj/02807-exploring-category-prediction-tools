@@ -61,7 +61,8 @@ class DataHandler(object):
             if debug_number != 0:
                data = data[:debug_number]
 
-            self.data_dict[category] = self.preprocess(data)
+            print(category + ": {0}".format(len(data)))
+            #self.data_dict[category] = self.preprocess(data)
             self.index_to_category_dict[i] = category
             self.category_to_index[category] = i
 
@@ -121,6 +122,6 @@ class DataHandler(object):
 if __name__ == '__main__':
     data_handler = DataHandler(balance_categories=True,
                                preprocessing_method="hashing_vectorize",
-                               debug_number=500)
+                               debug_number=0)
     train_X, train_y = data_handler.get_train()
     test_X, test_y = data_handler.get_test()
