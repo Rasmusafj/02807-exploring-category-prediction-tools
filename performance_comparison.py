@@ -22,12 +22,35 @@ def get_model(model):
             "debug_number": 100
         }
         return LSHMinHash(**arguments)
+    if model == "SVM":
+        arguments = {
+            "C_id": 200.0,
+            "kernel_id": 'linear',
+            "debug_number": 100,
+            "h": 2**11
+        }
+        return SVCMachineLearningModel(**arguments)
 
-
+#LSHMinHash
 tracemalloc.start()
 custom_timer = CustomTimer()
 custom_timer.start()
 model = get_model("LSH")
+total_time = custom_timer.stop_timer_and_get_result()
+print("Took {0} seconds to initialize model and preprocess data.".format(total_time))
+
+custom_timer.start()
+model.evaluate_on_test()
+total_time = custom_timer.stop_timer_and_get_result()
+print("Took {0} seconds to evaluate model.".format(total_time))
+snapshot = tracemalloc.take_snapshot()
+total_allocated_memory(snapshot)
+
+#SVM
+tracemalloc.start()
+custom_timer = CustomTimer()
+custom_timer.start()
+model = get_model("SVM")
 total_time = custom_timer.stop_timer_and_get_result()
 print("Took {0} seconds to initialize model and preprocess data.".format(total_time))
 
