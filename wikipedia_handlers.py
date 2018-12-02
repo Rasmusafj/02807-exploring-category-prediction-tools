@@ -10,8 +10,6 @@ from random import shuffle
 
 from gensim.corpora import WikiCorpus
 import io
-import json
-
 import os.path
 
 
@@ -61,45 +59,6 @@ def generate_corpus(load_only=None,
                 break
 
     print('Processed ' + str(counter) + ' articles')
-
-
-def load_existing_corpus(in_file="./data/wiki_en_with_categories.txt"):
-    """
-    Loads the first 10000 wikipedia articles into a list.
-    Care for memory explode using full txt-file.
-    ToDo: Implement generators for data_handling.
-
-    :param in_file: Txt file generated from generate_corpus() method
-    :return: List where each element is a tokenized wiki article
-    """
-
-    print('Loading corpus from txt file...')
-    corpus_list = []
-    file_reader = io.open(in_file, encoding='utf-8')
-    for i in range(100):
-        corpus_list.append(file_reader.readline())
-    return corpus_list
-
-
-def data_generator():
-    batch_size = 1000
-    articles = os.listdir("data/articles/")
-    shuffle(articles)
-    counter = 0
-
-    while True:
-        data = []
-        for fname in articles[counter:counter+batch_size]:
-
-            with open(fname, 'r') as f:
-                data.append(",".split(f.read()))
-
-            if counter % len(articles) == 0:
-                counter = 0
-
-        counter += batch_size
-        yield data
-
 
 def create_dataset():
     all_categories = ["Category:Research",

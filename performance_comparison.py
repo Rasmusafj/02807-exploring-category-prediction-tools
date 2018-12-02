@@ -46,6 +46,7 @@ print("Took {0} seconds to evaluate model.".format(total_time))
 snapshot = tracemalloc.take_snapshot()
 total_allocated_memory(snapshot)
 model.generate_confusion_matrix("Confusion matrix LSH", "LSH")
+
 """
 #SVM
 tracemalloc.start()

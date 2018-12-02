@@ -26,8 +26,6 @@ def signature_permutation(S, k, single=False):
 
 
 def jaccard_distance(S, T):
-    S = set(S)
-    T = set(T)
     return len(S & T) / len(S | T)
 
 
@@ -38,6 +36,8 @@ def jaccard_estimation(S, T):
 
 
 def signature(S, k, single=False):
+    # Credits to slides from week08
+
     sig = []
 
     # Append large ints to signatures
