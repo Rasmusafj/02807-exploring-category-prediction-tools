@@ -18,7 +18,7 @@ def get_model(model):
             "k_neighbours": 15,
             "k_hash_functions": 400,
             "n_shingles": 1,
-            "bands": 50,
+            "bands": 100,
             "debug_number": 0
         }
         return LSHMinHash(**arguments)
@@ -68,7 +68,7 @@ total_allocated_memory(snapshot)
 '''
 
 """
-"""
+
 k_neighbours_list = [3, 5, 10, 20, 40]
 
 # Pipeline for the AbstractModel implementation
@@ -76,6 +76,6 @@ for k_neighbour in k_neighbours_list:
     model.k_neighbours = k_neighbour
     accuracy = model.evaluate_on_test()
     print("Accuracy for k={0} is: {1}".format(k_neighbour, accuracy))
-
+"""
 =======
 """
