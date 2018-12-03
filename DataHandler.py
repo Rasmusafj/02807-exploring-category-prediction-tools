@@ -61,8 +61,8 @@ class DataHandler(object):
             if debug_number != 0:
                data = data[:debug_number]
 
-            print(category + ": {0}".format(len(data)))
-            #self.data_dict[category] = self.preprocess(data)
+            #print(category + ": {0}".format(len(data)))
+            self.data_dict[category] = self.preprocess(data)
             self.index_to_category_dict[i] = category
             self.category_to_index[category] = i
 
