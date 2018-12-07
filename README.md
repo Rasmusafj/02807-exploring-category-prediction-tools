@@ -7,8 +7,21 @@ The project was created by Sabine Fie Hansen (s134583) and Rasmus Arpe Fogh Jens
 ## Code guide
 Since the code is not run by simply calling a main method, a guide has been made.
 To see which external python libraries are needed to run the code, we refer to `requirements.txt`
-or conda install the environment in `catpred-env.yml`.
+or `environment.yml`. To setup a virtual environment using anaconda run 
 
+
+`conda env create -f environment.yml` 
+
+which will create the virtual environment 02807-project, which can be activated by
+
+`source activate 02807-project`
+
+To setup a virtual environment using pip first create the virtual environment with
+python 3.7 and then run
+
+`pip install -r requirements.txt`
+
+Then you may activate the created environment.
 
 ### Creating the dataset
 The dataset files are included in the repository, so preprocessing is not
