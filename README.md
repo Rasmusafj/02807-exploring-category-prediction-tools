@@ -2,7 +2,7 @@
 A universal category prediction tool based on Wikipedia created for the 
 DTU course 02807 - Computational Tools for Data science.
 
-The project was created by Sabine Fie Hansen (s13????) and Rasmus Arpe Fogh Jensen (s134843). 
+The project was created by Sabine Fie Hansen (s134583) and Rasmus Arpe Fogh Jensen (s134843). 
 
 ## Code guide
 Since the code is not run by simply calling a main method, a guide has been made.
