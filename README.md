@@ -36,7 +36,7 @@ can be divided into three steps.
 #### Preprocessing Wikipedia
 In order to preprocess all articles of Wikipedia you first need to download a 
 Wikipedia dump from Download wiki dump from https://dumps.wikimedia.org/enwiki/latest/. 
-In this project we used enwiki-latest-pages-articles.xml.bz2.
+In this project we used `enwiki-latest-pages-articles.xml.bz2`.
 
 In `wikipedia_handlers.py` the function `generate_corpus()` needs to be called. 
 You can either give in_file as argument corresponding to the path to Wikipedia dump
@@ -44,7 +44,8 @@ or place the exact Wikipedia dump we used in the `./data/` dir.
 
 The function will preprocess all of Wikipedia articles into `./data/articles/`.
 
-Warning: preprocessing all of Wikipedia is very time consuming. 
+**Warning:** Preprocessing all of Wikipedia is very time consuming and will fill
+up your local drive. 
 
 #### Extracting category information
 In `wikipedia_api_handler.py` the function `extract_page_ids_for_category()`
@@ -56,11 +57,11 @@ It is possible to continue extracting article
 ids for a category using `continue_category_page_extraction()`. See the `__main__` method of `wikipedia_api_handler.py`
 on how to call the functions.
 
-Sidenote: You need to extract article ids seperately for each category in order
-to abide with Wikipedias thumb rule og 1 request pr. second.
+**Sidenote:** You need to extract article ids seperately for each category in order
+to abide with Wikipedias thumb rule of 1 request pr. second.
 
 #### Final Dataset
-If you have succesfully completed two above steps, simply call the `create_dataset()` function
+If you have succesfully completed the two above steps, simply call the `create_dataset()` function
 in `wikipedia_handlers.py`. This will generate the final dataset. 
 
 
