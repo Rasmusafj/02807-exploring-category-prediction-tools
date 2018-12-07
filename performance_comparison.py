@@ -18,8 +18,8 @@ def get_model(model):
             "k_neighbours": 15,
             "k_hash_functions": 400,
             "n_shingles": 1,
-            "bands": 50,
-            "debug_number": 50
+            "bands": 100,
+            "debug_number": 0
         }
         return LSHMinHash(**arguments)
     if model == "SVM":
