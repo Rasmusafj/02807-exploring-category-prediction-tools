@@ -9,7 +9,7 @@ from utils import construct_set_similarities, construct_token_frequencies
 class DataHandler(object):
 
     def __init__(self,
-                 directory_path="./data/dataset/",
+                 directory_path="./data/dataset_subset/",
                  test_split=0.2,
                  balance_categories=False,
                  preprocessing_method=None,

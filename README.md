@@ -24,7 +24,8 @@ python 3.7 and then run
 Then you may activate the created environment.
 
 ### Creating the dataset
-The dataset files are included in the repository, so preprocessing is not
+We've included a subset of datafiles used in the repository (the original files were all about 50mb),
+ so preprocessing is not
 neccesary in order to test the models or run the category prediction app.
 However, if you wish to create the dataset using the same approach, the process
 can be divided into three steps. 

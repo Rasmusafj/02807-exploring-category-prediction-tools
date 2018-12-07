@@ -17,7 +17,7 @@ arguments = {
 LSH = LSHMinHash(**arguments)
 
 arguments = {
-        "debug_number": 1000,
+        "debug_number": 0,
         "C_id": 200.0,
         "kernel_id": 'linear',
         "h": 2**11,
