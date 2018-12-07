@@ -81,7 +81,7 @@ To run the app, first open the file `./wiki_catpred_app/predidiction/views.py` a
 the `super_path` variable to match the root of the project on your local machine. 
 
 Then simply go to directory `./wiki_catpred_app/` and execute 
-`./manage.py run-server`. This will launch the app on localhost using port 8000. Go to the
+`./manage.py runserver`. This will launch the app on localhost using port 8000. Go to the
 URL `http://127.0.0.1:8000/prediction/` in order to predict a new document. 
 
 Note that if you want to test an unseen document, you first need to extract the text
