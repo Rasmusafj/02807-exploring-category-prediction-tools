@@ -23,9 +23,9 @@ class DataHandler(object):
 
         category_files = os.listdir(directory_path)
 
-        if debug_number != 0:
-            shuffle(category_files)
-            category_files = category_files[0:6]
+        #if debug_number != 0:
+        #    shuffle(category_files)
+        #    category_files = category_files[0:6]
 
         regex_category = "(.*)\.txt"
 
@@ -61,7 +61,6 @@ class DataHandler(object):
             if debug_number != 0:
                data = data[:debug_number]
 
-            #print(category + ": {0}".format(len(data)))
             self.data_dict[category] = self.preprocess(data)
             self.index_to_category_dict[i] = category
             self.category_to_index[category] = i
@@ -120,6 +119,7 @@ class DataHandler(object):
 
 
 if __name__ == '__main__':
+    # Test data handler
     data_handler = DataHandler(balance_categories=True,
                                preprocessing_method="hashing_vectorize",
                                debug_number=0)

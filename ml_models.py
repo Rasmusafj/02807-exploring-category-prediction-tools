@@ -11,7 +11,7 @@ from utils import plot_confusion_matrix, jaccard_estimation
 import mmh3
 from sklearn import svm
 from sklearn.metrics import confusion_matrix
-
+import sys
 
 class AbstractModel(ABC):
     """
@@ -301,54 +301,31 @@ class SVCMachineLearningModel(AbstractModel):
 
 
 if __name__ == '__main__':
-    # Testing
 
-    # KNNSimilarities no LSH
-    """
-    arguments = {
-        "k_neighbours": 10,
-        "k_hash_functions": 300,
-        "n_shingles": 2,
-    }
-    # Pipeline for the AbstractModel implementation
-    model = SetSimiliaritiesKNN(**arguments)
-    accuracy = model.evaluate_on_test()
-    print("Accuracy is: {0}".format(accuracy))
-    """
+    model = sys.argv[1]
 
-    arguments = {
-        "k_neighbours": 15,
-        "k_hash_functions": 400,
-        "n_shingles": 1,
-        "bands": 200,
-        "debug_number": 0
-    }
-    model = LSHMinHash(**arguments)
-    model.evaluate_on_test()
-    # model.generate_confusion_matrix("Confusion matrix LSH", "LSH")
-
-
-    """
-    k_neighbours = [3, 5, 10, 20, 50]
-
-    for k in k_neighbours:
-        model.k_neighbours = k
-        accuracy = model.evaluate_on_test()
-        print("k: {0}".format(k))
-        print("Accuracy is: {0}".format(accuracy))
-
-    model.data_handler.preprocess([])
-    """
-    """
-    arguments = {
-        "debug_number": 20,
-        "normalize": True,
-        "h": 2**7
+    if model == "LSH":
+        # KNNSimilarities
+        arguments = {
+            "k_neighbours": 15,
+            "k_hash_functions": 400,
+            "n_shingles": 1,
+            "bands": 200,
+            "debug_number": 0
         }
+        model = LSHMinHash(**arguments)
+        model.evaluate_on_test()
 
-    # Pipeline for the AbstractModel implementation
-    model = SVCMachineLearningModel(**arguments)
-    model.generate_confusion_matrix("SUP", "SUPSVM")
-    accuracy = model.evaluate_on_test()
-    print("Accuracy is: {0}".format(accuracy))
-    """
+    elif model == "SVC":
+        arguments = {
+            "debug_number": 0,
+            "normalize": True,
+            "h": 2**11,
+            "C_id": 200.0,
+            "kernel_id": 'linear'
+            }
+
+        # Pipeline for the AbstractModel implementation
+        model = SVCMachineLearningModel(**arguments)
+        model.evaluate_on_test()
+

@@ -1,0 +1,53 @@
+General Info
+Please contact Anders in case of questions. Only contact other teachers in case of questions directly related to their lectures.
+
+Teachers
+
+Teaching Assistants
+
+Lectures/classes Tuesdays 13.00-17.00.
+
+Location
+
+Lectures: Building 306 auditorium 033 (we start here at 13.00 in the first 8 weeks).
+Exercises: Center of building 303A (B303A-HVEST, B303A-HOEST), West-side area on first floor in building 306.
+Materials Most topics will be based on the book "Minning of Massive Datasets" - see book homepage. However, many additional materials will be used.
+
+CodeJudge We use CodeJudge for testing code. Access CodeJudge here.
+
+Piazza We use Piazza for online discussions. Access Piazza here.
+
+PeerGrade.io We use PeerGrade for the project. Access PeerGrade here. and use the code SJSU5Y to join.
+
+Weekplan
+The following plan is tentative and may be changed during the semester.
+
+Week	Topics	Slides	Weekplan	Materials
+1	The UNIX terminal and Git	Introduction	Weekplan	Run Ubuntu on Windows, Guide to the UNIX Terminal, Intro to Git, Google
+2	Python brush up #1	Slides, Python files	Weekplan	Introduction to Programming in Python
+3	Python brush up #2	Slides	Weekplan	NumPy, SciPy, and Numba
+4	Massively Parallel Computation	Slides	Weekplan	Chapter 2, Test files
+5	Filtering and Streaming	Slides	Weekplan, Test files	Chapter 4
+6	Introduction to Project
+7	Databases	Slides	Weekplan	SQLite, SQLite SQL, SQLite Python package, Extra SQL Exercises
+8	Locality Sensitive Hashing	Slides	Weekplan	Chapter 3, Data and template
+9	Clustering	Slides	Weekplan	Chapter 7, Data
+10-12	Project work
+13	Project demos
+Mandatory assignments
+Below you can see the mandatory assignments. These assignments are individual. Make sure to read the collaboration policy.
+
+Assignment	Released	Due	Problem text	Materials
+LogAnalyzer	Tuesday, September 18, 2018	20:00, Sunday, September 30, 2018	Problem	Template & test data
+HyperLogLog	Tuesday, October 2, 2018	20:00, Sunday, October 21, 2018	Problem (UPDATED - see * below)	Template & test data Bigger samples
+Car Registry	Tuesday, October 23, 2018	20:00, Sunday, November 4, 2018	Problem	Template & test data
+DBSCAN	Tuesday, November 6, 2018	20:00, Sunday, November 18, 2018	Problem	Data
+Hints has been added in the bottom of the problem description. Absolute/relative errors limits has been relaxed, and memory limit has been adjusted to fit with the real need. Score formula in competition has been adjusted accordingly. Bigger samples has been provided (the same samples that are used on CodeJudge)
+
+Collaboration policy All mandatory exercises are subject to the following collaboration policy. The exercises are individual. It is not allowed to collaborate on the exercises, except for discussing the text of the exercise with teachers and fellow students enrolled on the course in the same semester. Under no circumstances is it allowed to exchange, hand-over or in any other way communicate solutions or part of solutions to the exercises. It is not allowed to use solution from previous years, solutions from similar courses, or solutions found on the internet or elsewhere.
+
+Project work
+See information (including important dates) about the project in this PDF file.
+
+Frequently Asked Questions
+Can I skip lectures/classes due to conflicting courses, travelling, ...? There will be given lectures in the first 8 weeks we highly recommend you participate in (however this is not a requirement). Furthermore, we will primarily be providing our assistance during lecture/class hours, so you should expect very little help if your are not able to show up during these hours. In the last 5 weeks there will be a group project where you should be able to work with your group members. Finally, we expect all to show up on the day this project is to be presented (date TBA). So basically, it is up to yourself to decide if you are fine with this, but do not expect us to accommadate your special needs as there are too many participants in this course for that.

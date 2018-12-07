@@ -7,18 +7,19 @@ from ml_models import LSHMinHash, SVCMachineLearningModel
 
 directory_path = super_path + "/data/dataset/"
 arguments = {
-    "k_neighbours": 20,
+    "k_neighbours": 15,
     "k_hash_functions": 400,
     "n_shingles": 1,
-    "bands": 200,
-    "debug_number": 20,
+    "bands": 100,
+    "debug_number": 0,
     "directory_path": directory_path,
 }
 LSH = LSHMinHash(**arguments)
 
 arguments = {
-        "debug_number": 20,
-        "normalize": True,
+        "debug_number": 1000,
+        "C_id": 200.0,
+        "kernel_id": 'linear',
         "h": 2**11,
         "directory_path": directory_path
         }

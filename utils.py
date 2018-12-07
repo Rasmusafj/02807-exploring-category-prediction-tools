@@ -12,7 +12,7 @@ from collections import Counter
 import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib import pyplot as plt
-
+from nltk.tokenize import wordpunct_tokenize
 
 def signature_permutation(S, k, single=False):
     m = MinHash(num_perm=k)
@@ -166,3 +166,33 @@ def plot_confusion_matrix(cm, classes,
     plt.tight_layout()
     plt.savefig("./figs/" + model + ".pdf")
     plt.show()
+
+
+def tokenize_document(filename):
+    """
+    Used to tokenize a new document.
+
+    :param filename:
+    :return: tokenized doc
+    """
+    doc = ""
+    with open(filename, 'r', encoding='utf-8') as f:
+        for line in f.readlines():
+            line = line.strip("\n")
+            doc += line
+
+    tokenized = wordpunct_tokenize(doc)
+    tokenized = [w.lower() for w in tokenized if len(w) > 1]
+    return tokenized
+
+
+if __name__ == '__main__':
+    file_path = "./data/showcase_files/reddit_"
+    new_ = "./data/showcase_files/reddit"
+
+    doc = tokenize_document(file_path)
+    final = ",".join(doc)
+    with open(new_, 'w', encoding="utf-8") as f:
+        f.write(final)
+
+

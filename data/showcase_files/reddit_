@@ -1,0 +1,6 @@
+Moving over to Go has made it painfully apparent how spoiled Python devs are to have the Requests library.
+I've been developing Python web apps and scripts to help automate my business for years and I make some heavy use of Requests for HTTP interaction in a few projects. Recently I started toying around with Go to branch out into more easily redistributable software, WebAssembly, and mobile app development. I started by trying to port over some existing Python scripts.
+
+What quickly became apparent is exactly how much time and code Requests has saved me over the years. The session management is so stupidly plug-and-play simple. That's not to say the Go http package is bad, Requests is just really, really convenient, powerful, and well-organized.
+
+So cheers to the maintainers of Requests. It's by far the thing I miss most while I'm learning Go.
