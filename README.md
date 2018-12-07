@@ -87,3 +87,4 @@ URL `http://127.0.0.1:8000/prediction/` in order to predict a new document.
 
 Note that if you want to test an unseen document, you first need to extract the text
 and tokenize the document using `tokenize_document()` function in `utils.py`. 
+The `__main__` method in `utils.py` show how to tokenize an unseen document, so that it works with the webapp/models. 
